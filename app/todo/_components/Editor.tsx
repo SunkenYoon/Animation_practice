@@ -23,6 +23,7 @@ export const Editor = () => {
   const editor = useEditor({
     extensions,
     content,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       const headers = parseHeaders(editor);
       const activeHeaderIndex = getActiveHeaderIndex(editor);

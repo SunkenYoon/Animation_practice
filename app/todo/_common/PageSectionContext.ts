@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext } from "react";
+import { createContext, RefObject } from "react";
 
 export type PageSectionHeader = {
   text: string;
@@ -11,6 +11,8 @@ export type PageSectionHeader = {
 type PageSectionContextValue = {
   headerList: PageSectionHeader[];
   setHeaderList: React.Dispatch<React.SetStateAction<PageSectionHeader[]>>;
+  scrollRef: RefObject<HTMLDivElement> | null;
+  setScrollRef: (ref: RefObject<HTMLDivElement>) => void;
 };
 
 export const PageSectionContext = createContext<

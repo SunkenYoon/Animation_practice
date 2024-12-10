@@ -41,10 +41,18 @@
   font-weight: 500;
   color: #000;
   text-decoration: none;
+
+  & > .placeholder {
+    color: var(--gray-4);
+  }
 }
 
 .button.button-overlay {
   color: var(--background);
+
+  & > .placeholder {
+    color: var(--background-transparent);
+  }
 }
 
 .clip-path-container {

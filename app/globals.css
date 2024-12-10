@@ -1,5 +1,6 @@
 :root {
   --background: #ffffff;
+  --background-transparent: rgba(255, 255, 255, 0.4);
   --foreground: #171717;
   --white: #fff;
   --black: #2e2b29;
