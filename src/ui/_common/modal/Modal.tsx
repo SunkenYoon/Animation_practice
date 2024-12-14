@@ -10,6 +10,7 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
+  //openModal로 여는 형태가 아니라, 외부에서 라우팅으로 접근하기 때문에 렌더링시 true로 전환
   useEffect(() => {
     setIsOpen(true);
   }, []);
@@ -17,6 +18,7 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       setIsOpen(false);
+      // 라우팅 되기 전에 애니메이션 할 딜레이 부여
       setTimeout(() => {
         router.back();
       }, 300);
