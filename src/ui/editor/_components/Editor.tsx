@@ -5,7 +5,7 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 import { getActiveHeaderIndex, parseHeaders } from "../_utils/parse_editor";
-import { usePageSection } from "../_common/PageSectionProvider";
+import { usePageSection } from "../../_common/PageSectionProvider";
 
 export const Editor = () => {
   const { setHeaderList } = usePageSection();
