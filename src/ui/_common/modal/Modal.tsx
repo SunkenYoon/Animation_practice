@@ -2,7 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
-import styles from "./Modal.module.css";
+import styles from "./modal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -30,14 +30,7 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       <AnimatePresence>
         {isOpen && (
           <Dialog.Portal forceMount>
-            <Dialog.Overlay asChild>
-              <motion.div
-                className={styles.overlay}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              />
-            </Dialog.Overlay>
+            <Dialog.Overlay className={styles.overlay} />
             <Dialog.Content asChild>
               <motion.div
                 className={styles.content}
