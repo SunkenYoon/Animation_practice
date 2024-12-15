@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from "./modal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export const Modal = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -30,8 +31,11 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       <AnimatePresence>
         {isOpen && (
           <Dialog.Portal forceMount>
+            <VisuallyHidden>
+              <Dialog.Title>Modal</Dialog.Title>
+            </VisuallyHidden>
             <Dialog.Overlay className={styles.overlay} />
-            <Dialog.Content asChild>
+            <Dialog.Content asChild aria-describedby={undefined}>
               <motion.div
                 className={styles.content}
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
