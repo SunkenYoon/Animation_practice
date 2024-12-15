@@ -3,11 +3,37 @@
 import styles from "./PageList.module.css";
 import { useEffect, useRef } from "react";
 import { usePageSection } from "../../_common/PageSectionProvider";
+import { PageSectionHeader } from "../../_common/PageSectionContext";
 export const PageList = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const activeTabElementRef = useRef<HTMLButtonElement>(null);
 
-  const { headerList, setHeaderList } = usePageSection();
+  const { headerList, setHeaderList, scrollRef } = usePageSection();
+
+  //TODO: focus on editor
+  const onClickPageTab = (tab: PageSectionHeader) => {
+    setHeaderList(
+      headerList.map((header, index) => ({
+        ...header,
+        isActive: index === headerList.indexOf(tab),
+      }))
+    );
+    if (scrollRef?.current) {
+      const headers = scrollRef.current.querySelectorAll("h2");
+      const targetHeader = headers[headerList.indexOf(tab)];
+      if (targetHeader) {
+        const containerTop = scrollRef.current.getBoundingClientRect().top;
+        const headerTop = targetHeader.getBoundingClientRect().top;
+        const scrollOffset = headerTop - containerTop;
+
+        // 상단 에서 20px 떨어지게 스크롤 이동
+        scrollRef.current.scrollTo({
+          top: scrollRef.current.scrollTop + scrollOffset - 20,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -35,20 +61,16 @@ export const PageList = () => {
       <ul className={styles.list}>
         {headerList.map((tab, index) => {
           return (
-            <li key={`${tab.text ?? ""}_index`}>
+            <li key={`${tab.text ?? ""}_${index}`}>
               <button
                 ref={tab.isActive ? activeTabElementRef : null}
                 data-tab={tab}
-                onClick={() => {
-                  setHeaderList(
-                    headerList.map((header, index) => ({
-                      ...header,
-                      isActive: index === headerList.indexOf(tab),
-                    }))
-                  );
-                }}
+                onClick={() => onClickPageTab(tab)}
                 className={styles.button}
               >
+                {tab.text.length === 0 && (
+                  <span className={styles.placeholder}>제목을 입력하세요.</span>
+                )}
                 {tab.text}
               </button>
             </li>
@@ -63,7 +85,7 @@ export const PageList = () => {
       >
         <ul className={`${styles.list} ${styles["list-overlay"]}`}>
           {headerList.map((tab, index) => (
-            <li key={`${tab.text ?? ""}_index`}>
+            <li key={`${tab.text ?? ""}_${index}`}>
               <button
                 data-tab={tab}
                 onClick={() => {
@@ -77,6 +99,9 @@ export const PageList = () => {
                 className={`${styles["button-overlay"]} ${styles.button}`}
                 tabIndex={-1}
               >
+                {tab.text.length === 0 && (
+                  <span className={styles.placeholder}>제목을 입력하세요.</span>
+                )}
                 {tab.text}
               </button>
             </li>
